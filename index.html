@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en" data-framework="angularjs">
+	<head>
+		<meta charset="utf-8">
+		<title>AngularJS & RequireJS • TodoMVC</title>
+		<link rel="stylesheet" href="node_modules/todomvc-common/base.css">
+		<link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
+		<style>[ng-cloak] { display: none; }</style>
+	</head>
+	<body>
+		<section class="todoapp" ng-controller="TodoController">
+			<header class="header">
+				<h1>todos</h1>
+				<form class="todo-form" ng-submit="addTodo()">
+					<input class="new-todo" placeholder="What needs to be done?" ng-model="newTodo" autofocus>
+				</form>
+			</header>
+			<section class="main" ng-show="todos.length" ng-cloak>
+				<input id="toggle-all" class="toggle-all" type="checkbox" ng-model="allChecked" ng-click="markAll(allChecked)">
+				<label for="toggle-all">Mark all as complete</label>
+				<!-- <table class="todo-list">
+					<tr>
+					    <th>Task name</th>
+					    <th>created on</th>
+					    <th>Completed on</th>
+					 </tr>
+					 <tr ng-repeat="todo in todos | filter:statusFilter track by $index" ng-class="{completed: todo.completed, editing: todo == editedTodo}">
+					 	<td>
+					 		<div class="view">
+							<input class="toggle" type="checkbox" ng-model="todo.completed">
+							<label ng-dblclick="editTodo(todo)" ng-class="{newtask:todo.status == 'new', activetask: todo.active}">{{todo.title}}</label>
+							<button class="destroy" ng-click="removeTodo(todo)"></button>
+						</div>
+						<form ng-submit="doneEditing(todo)">
+							<input class="edit" ng-trim="false" ng-model="todo.title" ng-blur="doneEditing(todo)" todo-escape="revertEditing(todo)" todo-focus="todo == editedTodo">
+						</form>
+					 	</td>
+					 	<td>
+					 		<span class="cDate" ng-if="todo.createdDate">{{todo.createdDate | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+					 	</td>
+					 	<td>
+					 		<span class="cDate" ng-if="todo.createdDate">{{todo.completedDate | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+					 	</td>
+					 </tr>
+				</table> -->
+				<ul class="todo-list">
+					<li ng-repeat="todo in todos | filter:statusFilter track by $index" ng-class="{completed: todo.completed, editing: todo == editedTodo}">
+						<div class="view">
+							<input class="toggle" type="checkbox" ng-model="todo.completed">
+							<label ng-dblclick="editTodo(todo)" ng-class="{newtask:todo.status == 'new', activetask: todo.active}">{{todo.title}}</label>
+							<span class="cDate" ng-if="todo.createdDate">Created Date:{{todo.createdDate | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+							<span class="dDate" ng-if="todo.completedDate">Completed Date:{{todo.completedDate | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+							<button class="destroy" ng-click="removeTodo(todo)"></button>
+						</div>
+						<form ng-submit="doneEditing(todo)">
+							<input class="edit" ng-trim="false" ng-model="todo.title" ng-blur="doneEditing(todo)" todo-escape="revertEditing(todo)" todo-focus="todo == editedTodo">
+						</form>
+					</li>
+				</ul>
+			</section>
+			<footer class="footer" ng-show="todos.length" ng-cloak>
+				<span class="todo-count"><strong>{{remainingCount}}</strong>
+					<ng-pluralize count="remainingCount" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>
+				</span>
+				<ul class="filters">
+					<li>
+						<a ng-class="{selected: location.path() == '/'} " href="#/">All</a>
+					</li>
+					<li>
+						<a ng-class="{selected: location.path() == '/active'}" href="#/active">Active</a>
+					</li>
+					<li>
+						<a ng-class="{selected: location.path() == '/completed'}" href="#/completed">Completed</a>
+					</li>
+				</ul>
+				<button class="clear-completed" ng-click="clearDoneTodos()" ng-show="remainingCount < todos.length">Clear completed</button>
+			</footer>
+		</section>
+		<script src="node_modules/todomvc-common/base.js"></script>
+		<script data-main="js/main" src="node_modules/requirejs/require.js"></script>
+	</body>
+</html>
